@@ -60,8 +60,14 @@ console.log('Is average correct?: ', avg.toFixed(2) === '68333.33')
 //true
   
   /* Task - Which department is the biggest? */
-const biggestDept: string = '' // write your function here
-  
+// const biggestDept: string = '' // write your function here
+ 
+const marketing = employees.filter(employee => employee.department === "Marketing").length;
+const sales = employees.filter(employee => employee.department === "Sales").length;
+const it = employees.filter(employee => employee.department === "IT").length;
+
+const biggestDept = marketing >= sales && marketing >= it ? "Marketing" : sales >= it ? "Sales" : "IT";
+
 console.log('Is biggest department correct?: ', biggestDept === 'Marketing')
   
   /* Task (fun one) - Create an object that groups employees by department 
