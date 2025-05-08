@@ -72,11 +72,37 @@ console.log('Is biggest department correct?: ', biggestDept === 'Marketing')
   
   /* Task (fun one) - Create an object that groups employees by department 
   The result should look like this: */
-const departments = {
-    marketing: {
-        deptName: 'Marketing',
-        positions: ['Marketing Specialist', 'Content Creator'], // list all positions once
-        people: [] // list all people that works in this dept
-      }
-      // ... all other depts 
+
+const departments = {};
+
+employees.forEach(emp => {
+  const dept = emp.department;
+
+  // if department doesnt exist create it here
+  if (!departments[dept]) {
+    departments[dept] = {
+      deptName: dept,
+      positions: [],
+      people: []
+    };
   }
+
+  // if position doesnt exist, create it
+  if (!departments[dept].positions.includes(emp.position)) {
+    departments[dept].positions.push(emp.position);
+  }
+
+  // add employee
+  departments[dept].people.push(emp.name);
+});
+
+console.log(departments);
+
+// const departments = {
+//     marketing: {
+//         deptName: 'Marketing',
+//         positions: ['Marketing Specialist', 'Content Creator'], // list all positions once
+//         people: [] // list all people that works in this dept
+//       }
+      // ... all other depts 
+//   }
