@@ -62,41 +62,63 @@ console.log('Is average correct?: ', avg.toFixed(2) === '68333.33')
   /* Task - Which department is the biggest? */
 // const biggestDept: string = '' // write your function here
  
-const marketing = employees.filter(employee => employee.department === "Marketing").length;
-const sales = employees.filter(employee => employee.department === "Sales").length;
-const it = employees.filter(employee => employee.department === "IT").length;
+// const marketing = employees.filter(employee => employee.department === "Marketing").length;
+// const sales = employees.filter(employee => employee.department === "Sales").length;
+// const it = employees.filter(employee => employee.department === "IT").length;
 
-const biggestDept = marketing >= sales && marketing >= it ? "Marketing" : sales >= it ? "Sales" : "IT";
+// const biggestDept = marketing >= sales && marketing >= it ? "Marketing" : sales >= it ? "Sales" : "IT";
 
-console.log('Is biggest department correct?: ', biggestDept === 'Marketing')
-  
+// console.log('Is biggest department correct?: ', biggestDept === 'Marketing')
+ 
+
+
+const departmentCounts = {};
+
+employees.forEach(employee => {
+  const dept = employee.department;
+  if (departmentCounts[dept]) {
+    departmentCounts[dept]++;
+  } else {
+    departmentCounts[dept] = 1;
+  }
+});
+
+let biggestDept = '';
+let maxCount = 0;
+
+for (const dept in departmentCounts) {
+  if (departmentCounts[dept] > maxCount) {
+    maxCount = departmentCounts[dept];
+    biggestDept = dept;
+  }
+}
+
+console.log('Największy dział to:', biggestDept);
+
   /* Task (fun one) - Create an object that groups employees by department 
   The result should look like this: */
 
-const departments = {};
+  const departments = {};
 
-employees.forEach(emp => {
-  const dept = emp.department;
-
-  // if department doesnt exist create it here
-  if (!departments[dept]) {
-    departments[dept] = {
-      deptName: dept,
-      positions: [],
-      people: []
-    };
-  }
-
-  // if position doesnt exist, create it
-  if (!departments[dept].positions.includes(emp.position)) {
-    departments[dept].positions.push(emp.position);
-  }
-
-  // add employee
-  departments[dept].people.push(emp.name);
-});
-
-console.log(departments);
+  employees.forEach(employee => {
+    const { department, position, name } = employee;
+  
+    if (!departments[department]) {
+      departments[department] = {
+        deptName: department,
+        positions: new Set(),
+        people: []
+      };
+    }
+  
+    const currentDepartment = departments[department];
+    currentDepartment.positions.add(position);
+    currentDepartment.people.push(name);
+  });
+  
+  
+  console.log(departments);
+  
 
 // const departments = {
 //     marketing: {
