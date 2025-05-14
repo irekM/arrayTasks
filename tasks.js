@@ -75,23 +75,14 @@ console.log('Is average correct?: ', avg.toFixed(2) === '68333.33')
 const departmentCounts = {};
 
 employees.forEach(employee => {
-  const dept = employee.department;
-  if (departmentCounts[dept]) {
-    departmentCounts[dept]++;
-  } else {
-    departmentCounts[dept] = 1;
-  }
+  const { department } = employee;
+  departmentCounts[department] = departmentCounts[department] ? departmentCounts[department] + 1 : 1;
+
 });
 
-let biggestDept = '';
-let maxCount = 0;
-
-for (const dept in departmentCounts) {
-  if (departmentCounts[dept] > maxCount) {
-    maxCount = departmentCounts[dept];
-    biggestDept = dept;
-  }
-}
+const biggestDept = Object.keys(departmentCounts).reduce((maxDept, currentDept) => {
+  return departmentCounts[currentDept] > departmentCounts[maxDept] ? currentDept : maxDept;
+});
 
 console.log('Największy dział to:', biggestDept);
 
