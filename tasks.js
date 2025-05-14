@@ -60,17 +60,62 @@ console.log('Is average correct?: ', avg.toFixed(2) === '68333.33')
 //true
   
   /* Task - Which department is the biggest? */
-const biggestDept: string = '' // write your function here
-  
-console.log('Is biggest department correct?: ', biggestDept === 'Marketing')
-  
+// const biggestDept: string = '' // write your function here
+ 
+// const marketing = employees.filter(employee => employee.department === "Marketing").length;
+// const sales = employees.filter(employee => employee.department === "Sales").length;
+// const it = employees.filter(employee => employee.department === "IT").length;
+
+// const biggestDept = marketing >= sales && marketing >= it ? "Marketing" : sales >= it ? "Sales" : "IT";
+
+// console.log('Is biggest department correct?: ', biggestDept === 'Marketing')
+ 
+
+
+const departmentCounts = {};
+
+employees.forEach(employee => {
+  const { department } = employee;
+  departmentCounts[department] = departmentCounts[department] ? departmentCounts[department] + 1 : 1;
+
+});
+
+const biggestDept = Object.keys(departmentCounts).reduce((maxDept, currentDept) => {
+  return departmentCounts[currentDept] > departmentCounts[maxDept] ? currentDept : maxDept;
+});
+
+console.log('Największy dział to:', biggestDept);
+
   /* Task (fun one) - Create an object that groups employees by department 
   The result should look like this: */
-const departments = {
-    marketing: {
-        deptName: 'Marketing',
-        positions: ['Marketing Specialist', 'Content Creator'], // list all positions once
-        people: [] // list all people that works in this dept
-      }
+
+  const departments = {};
+
+  employees.forEach(employee => {
+    const { department, position, name } = employee;
+  
+    if (!departments[department]) {
+      departments[department] = {
+        deptName: department,
+        positions: new Set(),
+        people: []
+      };
+    }
+  
+    const currentDepartment = departments[department];
+    currentDepartment.positions.add(position);
+    currentDepartment.people.push(name);
+  });
+  
+  
+  console.log(departments);
+  
+
+// const departments = {
+//     marketing: {
+//         deptName: 'Marketing',
+//         positions: ['Marketing Specialist', 'Content Creator'], // list all positions once
+//         people: [] // list all people that works in this dept
+//       }
       // ... all other depts 
-  }
+//   }
